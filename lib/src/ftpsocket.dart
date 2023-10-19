@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:ftpclient/src/debug/debuglog.dart';
 
@@ -13,7 +13,7 @@ class FTPSocket {
   final DebugLog _log;
   final int _timeout;
 
-  RawSynchronousSocket _socket;
+  late RawSynchronousSocket _socket;
 
   FTPSocket(this.host, this.port, this._log, this._timeout);
 
@@ -27,7 +27,7 @@ class FTPSocket {
 
     do {
       if (iToRead > 0) {
-        buffer.write(_codec.decode(_socket.readSync(iToRead)));
+        buffer.write(_codec.decode(_socket.readSync(iToRead) ?? []));
       }
 
       iToRead = _socket.available();

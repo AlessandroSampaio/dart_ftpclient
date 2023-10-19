@@ -30,20 +30,20 @@ class FTPEntry {
       this.additionalProperties);
 
   factory FTPEntry(final String sMlsdResponseLine) {
-    if (sMlsdResponseLine == null || sMlsdResponseLine.trim().isEmpty) {
+    if (sMlsdResponseLine.trim().isEmpty) {
       throw FTPException('Can\'t create instance from empty information');
     }
 
-    String _name;
-    DateTime _modifyTime;
-    String _persmission;
-    String _type;
+    late String _name;
+    late DateTime _modifyTime;
+    late String _persmission;
+    late String _type;
     int _size = 0;
-    String _unique;
-    String _group;
+    late String _unique;
+    late String _group;
     int _gid = -1;
-    String _mode;
-    String _owner;
+    late String _mode;
+    late String _owner;
     int _uid = -1;
     Map<String, String> _additional = {};
 

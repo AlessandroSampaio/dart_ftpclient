@@ -1,7 +1,7 @@
 import '../ftpsocket.dart';
 
 class FTPFile {
-  FTPSocket _socket;
+  final FTPSocket _socket;
 
   FTPFile(this._socket);
 

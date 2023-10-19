@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:ftpclient/src/commands/file.dart';
 import 'package:ftpclient/src/commands/filedownload.dart';
 import 'package:ftpclient/src/commands/fileupload.dart';
 import 'package:ftpclient/src/debug/debuglog.dart';
 import 'package:ftpclient/src/debug/nooplog.dart';
 import 'package:ftpclient/src/debug/printlog.dart';
+import 'package:universal_io/io.dart';
 
 import 'commands/directory.dart';
 import 'dto/FTPEnty.dart';
@@ -15,8 +14,8 @@ import 'transfermode.dart';
 class FTPClient {
   final String _user;
   final String _pass;
-  FTPSocket _socket;
-  final int _bufferSize;
+  final FTPSocket _socket;
+  // final int _bufferSize;
   final DebugLog _log;
 
   /// Create a FTP Client instance
@@ -27,19 +26,20 @@ class FTPClient {
   /// [pass]: Password if not anonymous login
   /// [debug]: Enable Debug Logging
   /// [timeout]: Timeout in secods to wait for responses
-  FTPClient(String host,
-      {int port = 21,
-      String user = 'anonymous',
-      String pass = '',
-      bool debug = false,
-      int timeout = 30,
-      int bufferSize = 1024 * 1024})
-      : _user = user,
+  FTPClient(
+    String host, {
+    int port = 21,
+    String user = 'anonymous',
+    String pass = '',
+    bool debug = false,
+    int timeout = 30,
+    int bufferSize = 1024 * 1024,
+  })  : _user = user,
         _pass = pass,
-        _bufferSize = bufferSize,
-        _log = debug ? PrintLog() : NoOpLogger() {
-    _socket = FTPSocket(host, port, _log, timeout);
-  }
+        // _bufferSize = bufferSize,
+        _log = debug ? PrintLog() : NoOpLogger(),
+        _socket =
+            FTPSocket(host, port, debug ? PrintLog() : NoOpLogger(), timeout);
 
   /// Connect to the FTP Server
   void connect() {

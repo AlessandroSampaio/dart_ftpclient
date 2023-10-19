@@ -35,7 +35,7 @@ class FileUpload {
 
     // Store File
     String sFilename = sRemoteName;
-    if (sFilename == null || sFilename.isEmpty) {
+    if (sFilename.isEmpty) {
       sFilename = basename(fFile.path);
     }
     _socket.sendCommand('STOR $sFilename');

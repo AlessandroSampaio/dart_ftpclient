@@ -49,7 +49,7 @@ class FileDownload {
 
     do {
       if (iToRead > 0) {
-        List<int> buffer = List<int>(iToRead);
+        List<int> buffer = List.filled(1, iToRead, growable: true);
         dataSocket.readIntoSync(buffer);
         fRAFile.writeFromSync(buffer);
         iRead += iToRead;

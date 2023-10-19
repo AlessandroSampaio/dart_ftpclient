@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:ftpclient/ftpclient.dart';
-import 'package:ftpclient/src/dto/FTPEnty.dart';
 import 'package:ftpclient/src/util/transferutil.dart';
 
-import '../ftpexceptions.dart';
 import '../ftpsocket.dart';
 
 class FTPDirectory {
@@ -77,11 +75,11 @@ class FTPDirectory {
     }
 
     int iToRead = 0;
-    List<int> lstDirectoryListing = List<int>();
+    List<int> lstDirectoryListing = List.empty(growable: true);
 
     do {
       if (iToRead > 0) {
-        List<int> buffer = List<int>(iToRead);
+        List<int> buffer = List.filled(1, iToRead, growable: true);
         dataSocket.readIntoSync(buffer);
         buffer.forEach(lstDirectoryListing.add);
       }
@@ -104,7 +102,7 @@ class FTPDirectory {
     }
 
     // Convert MLSD response into FTPEntry
-    List<FTPEntry> lstFTPEntries = List<FTPEntry>();
+    List<FTPEntry> lstFTPEntries = List.empty(growable: true);
     String.fromCharCodes(lstDirectoryListing).split('\n').forEach((line) {
       if (line.trim().isNotEmpty) {
         lstFTPEntries.add(FTPEntry(line));
